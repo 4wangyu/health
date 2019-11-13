@@ -94,8 +94,16 @@ Now each time you make a change on your Ionic app run the following:
 $ ionic build --prod
 ```
 
+## Deployment
+
 Finally, type the following command into your CLI to deploy.
 
 ```
 $ firebase deploy
+```
+
+## Development
+
+```
+ionic serve
 ```
