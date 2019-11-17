@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
 import { FirebaseService } from "../services/firebase.service";
-import { User } from "../models/user.model";
+import { User } from "../models/health.model";
 import { DocumentSnapshot, Action } from "@angular/fire/firestore";
 
 @Component({
@@ -22,7 +22,7 @@ export class MePage implements OnInit {
   points: number;
 
   ngOnInit(): void {
-    var userRef = this.fbSvc.getUserRef();
+    const userRef = this.fbSvc.getUserRef();
     userRef
       .snapshotChanges()
       .subscribe(

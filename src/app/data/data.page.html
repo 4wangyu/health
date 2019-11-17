@@ -6,4 +6,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ng-container *ngFor="let category of categories">
+    <ion-card [color]="category.color">
+      <ion-card-header>
+        <ion-card-title>{{category.title}}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </ng-container>
+</ion-content>
