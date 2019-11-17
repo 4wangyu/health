@@ -91,6 +91,7 @@ export class TodayPage implements OnInit {
     });
 
     this.resetForm();
+    this.fbSvc.addOnePoint();
   }
 
   private resetForm() {
