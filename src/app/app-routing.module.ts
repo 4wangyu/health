@@ -16,7 +16,8 @@ const routes: Routes = [
   {
     path: "register",
     loadChildren: "./register/register.module#RegisterPageModule"
-  }
+  },
+  { path: "**", redirectTo: "tabs" }
 ];
 @NgModule({
   imports: [
