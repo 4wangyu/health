@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { AuthService } from "../services/auth.service";
 import { NavController } from "@ionic/angular";
+import { FirebaseService } from "../services/firebase.service";
 
 @Component({
   selector: "app-register",
@@ -35,7 +36,8 @@ export class RegisterPage implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private firebaseSvc: FirebaseService
   ) {}
 
   ngOnInit() {
@@ -56,8 +58,9 @@ export class RegisterPage implements OnInit {
 
   tryRegister(value) {
     this.authService.doRegister(value).then(
-      res => {
-        console.log(res);
+      user => {
+        this.firebaseSvc.initUserData(user.user.uid);
+        console.log(user);
         this.errorMessage = "";
         this.successMessage = "Your account has been created. Please log in.";
       },

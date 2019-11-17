@@ -3,6 +3,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import * as firebase from "firebase/app";
 import "firebase/storage";
 import { AngularFireAuth } from "@angular/fire/auth";
+import * as moment from "moment";
 
 @Injectable({
   providedIn: "root"
@@ -11,6 +12,39 @@ export class FirebaseService {
   private snapshotChangesSubscription: any;
 
   constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth) {}
+
+  testUpdate() {
+    this.afs
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        points: 1
+      });
+  }
+
+  initUserData(uid: string) {
+    const today = moment().format("YYYYMMDD");
+    const userFields = {
+      points: 0,
+      onboardDate: today,
+      categories: ["Sleep", "Exercise", "Nutrition", "Mindfulness"],
+      calculateDate: moment()
+        .subtract(1, "day")
+        .format("YYYYMMDD")
+    };
+    const userData = {
+      point: 0,
+      activities: []
+    };
+
+    const userRef = this.afs.collection("users").doc(uid);
+
+    userRef.set(userFields);
+    userRef
+      .collection("data")
+      .doc(today)
+      .set(userData);
+  }
 
   getTasks() {
     return new Promise<any>((resolve, reject) => {
@@ -49,7 +83,7 @@ export class FirebaseService {
 
   unsubscribeOnLogOut() {
     //remember to unsubscribe from the snapshotChanges
-    this.snapshotChangesSubscription.unsubscribe();
+    // this.snapshotChangesSubscription.unsubscribe();
   }
 
   updateTask(taskKey, value) {
@@ -61,7 +95,10 @@ export class FirebaseService {
         .collection("tasks")
         .doc(taskKey)
         .set(value)
-        .then(res => resolve(res), err => reject(err));
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
     });
   }
 
@@ -74,7 +111,10 @@ export class FirebaseService {
         .collection("tasks")
         .doc(taskKey)
         .delete()
-        .then(res => resolve(res), err => reject(err));
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
     });
   }
 
@@ -90,39 +130,10 @@ export class FirebaseService {
           description: value.description,
           image: value.image
         })
-        .then(res => resolve(res), err => reject(err));
-    });
-  }
-
-  encodeImageUri(imageUri, callback) {
-    var c = document.createElement("canvas");
-    var ctx = c.getContext("2d");
-    var img = new Image();
-    img.onload = function() {
-      var aux: any = this;
-      c.width = aux.width;
-      c.height = aux.height;
-      ctx.drawImage(img, 0, 0);
-      var dataURL = c.toDataURL("image/jpeg");
-      callback(dataURL);
-    };
-    img.src = imageUri;
-  }
-
-  uploadImage(imageURI, randomId) {
-    return new Promise<any>((resolve, reject) => {
-      let storageRef = firebase.storage().ref();
-      let imageRef = storageRef.child("image").child(randomId);
-      this.encodeImageUri(imageURI, function(image64) {
-        imageRef.putString(image64, "data_url").then(
-          snapshot => {
-            snapshot.ref.getDownloadURL().then(res => resolve(res));
-          },
-          err => {
-            reject(err);
-          }
+        .then(
+          res => resolve(res),
+          err => reject(err)
         );
-      });
     });
   }
 }
