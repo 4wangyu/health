@@ -5,7 +5,7 @@ import { redirectUnauthorizedTo, canActivate } from "@angular/fire/auth-guard";
 const redirectToLogin = redirectUnauthorizedTo(["login"]);
 
 const routes: Routes = [
-  { path: "", redirectTo: "tabs", pathMatch: "full" },
+  { path: "", redirectTo: "login", pathMatch: "full" },
   { path: "login", loadChildren: "./login/login.module#LoginPageModule" },
   {
     path: "tabs",
