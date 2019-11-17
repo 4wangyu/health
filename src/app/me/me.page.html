@@ -1,11 +1,22 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Three
+      Me
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button color="primary" (click)="logout()">logout</ion-button>
+  <ion-item>
+    <ion-label>My Points</ion-label>
+    <ng-container *ngIf="points >= 0">
+      <ion-badge color="success" slot="end">{{points}}</ion-badge>
+    </ng-container>
+    <ng-container *ngIf="0 > points">
+      <ion-badge color="danger" slot="end">{{points}}</ion-badge>
+    </ng-container>
+  </ion-item>
+  <ion-item>
+    <ion-label color="danger" (click)="logout()">Logout</ion-label>
+  </ion-item>
 </ion-content>

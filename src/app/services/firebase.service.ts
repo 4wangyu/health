@@ -13,12 +13,16 @@ export class FirebaseService {
 
   constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth) {}
 
+  getUserRef() {
+    return this.afs.collection("users").doc(firebase.auth().currentUser.uid);
+  }
+
   testUpdate() {
     this.afs
       .collection("users")
       .doc(firebase.auth().currentUser.uid)
       .update({
-        points: 1
+        points: 2
       });
   }
 
