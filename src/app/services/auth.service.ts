@@ -17,7 +17,10 @@ export class AuthService {
       firebase
         .auth()
         .createUserWithEmailAndPassword(value.email, value.password)
-        .then(res => resolve(res), err => reject(err));
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
     });
   }
 
@@ -26,7 +29,10 @@ export class AuthService {
       firebase
         .auth()
         .signInWithEmailAndPassword(value.email, value.password)
-        .then(res => resolve(res), err => reject(err));
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
     });
   }
 
@@ -35,7 +41,6 @@ export class AuthService {
       this.afAuth.auth
         .signOut()
         .then(() => {
-          this.firebaseService.unsubscribeOnLogOut();
           resolve();
         })
         .catch(error => {
