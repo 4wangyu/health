@@ -4,6 +4,7 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 import { AngularFireAuth } from "@angular/fire/auth";
 import * as moment from "moment";
+import { Activity } from "../models/health.model";
 
 @Injectable({
   providedIn: "root"
@@ -17,6 +18,24 @@ export class FirebaseService {
     return this.afs.collection("users").doc(firebase.auth().currentUser.uid);
   }
 
+  getDataRef() {
+    return this.afs
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("data");
+  }
+
+  updateActivities(date: string, activities: Activity[]) {
+    this.afs
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("data")
+      .doc(date)
+      .update({
+        activities: activities
+      });
+  }
+
   testUpdate() {
     this.afs
       .collection("users")
@@ -27,14 +46,14 @@ export class FirebaseService {
   }
 
   initUserData(uid: string) {
-    const today = moment().format("YYYYMMDD");
+    const today = moment().format("YYYY-MM-DD");
     const userFields = {
       points: 0,
       onboardDate: today,
-      categories: ["Sleep", "Exercise", "Nutrition", "Mindfulness"],
+      categories: ["Sleep", "Mindfulness", "Nutrition", "Exercise"],
       calculateDate: moment()
         .subtract(1, "day")
-        .format("YYYYMMDD")
+        .format("YYYY-MM-DD")
     };
     const userData = {
       point: 0,

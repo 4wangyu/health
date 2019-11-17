@@ -17,13 +17,16 @@ export class DataPage implements OnInit {
 
   ngOnInit(): void {
     const userRef = this.fbSvc.getUserRef();
-    userRef.snapshotChanges().subscribe((res: Action<DocumentSnapshot<User>>) =>
-      res.payload.data().categories.forEach((cat, i) => {
-        this.categories.push({
-          title: cat,
-          color: this.colors[i % 4]
+    userRef
+      .snapshotChanges()
+      .subscribe((res: Action<DocumentSnapshot<User>>) => {
+        this.categories = [];
+        res.payload.data().categories.forEach((cat, i) => {
+          this.categories.push({
+            title: cat,
+            color: this.colors[i % 4]
+          });
         });
-      })
-    );
+      });
   }
 }
