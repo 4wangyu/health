@@ -15,6 +15,8 @@ export class DataPage implements OnInit {
   colors = Config.colors;
   cats = [];
   categories = [];
+  showForm = false;
+  input: string;
 
   ngOnInit(): void {
     const userRef = this.fbSvc.getUserRef();
@@ -35,5 +37,16 @@ export class DataPage implements OnInit {
   delete(cat: string) {
     this.cats = this.cats.filter(x => x != cat);
     this.fbSvc.updateCategories(this.cats);
+  }
+
+  updateInput(input: any) {
+    this.input = input.detail.value;
+  }
+
+  add() {
+    const string = this.input.toLowerCase();
+    this.cats.push(string.charAt(0).toUpperCase() + string.slice(1));
+    this.fbSvc.updateCategories(this.cats);
+    this.showForm = false;
   }
 }

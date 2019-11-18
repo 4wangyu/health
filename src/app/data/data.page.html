@@ -4,6 +4,11 @@
       Health Data
     </ion-title>
   </ion-toolbar>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showForm = !showForm">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-header>
 
 <ion-content>
@@ -20,3 +25,13 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-content>
+
+<ion-footer *ngIf="showForm">
+  <ion-item>
+    <ion-input placeholder="Input Here" (ionChange)="updateInput($event)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-button fill="clear" color="success" [disabled]="!input" (click)="add()">Add
+    </ion-button>
+  </ion-item>
+</ion-footer>
