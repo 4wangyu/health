@@ -34,6 +34,15 @@ export class FirebaseService {
       });
   }
 
+  updateCategories(cats: string[]) {
+    this.afs
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        categories: cats
+      });
+  }
+
   initUserData(uid: string) {
     const today = moment().format("YYYY-MM-DD");
     const userFields = {

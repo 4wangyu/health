@@ -13,6 +13,7 @@ export class DataPage implements OnInit {
   constructor(private fbSvc: FirebaseService) {}
 
   colors = Config.colors;
+  cats = [];
   categories = [];
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class DataPage implements OnInit {
     userRef
       .snapshotChanges()
       .subscribe((res: Action<DocumentSnapshot<User>>) => {
+        this.cats = res.payload.data().categories;
         this.categories = [];
         res.payload.data().categories.forEach((cat, i) => {
           this.categories.push({
@@ -28,5 +30,10 @@ export class DataPage implements OnInit {
           });
         });
       });
+  }
+
+  delete(cat: string) {
+    this.cats = this.cats.filter(x => x != cat);
+    this.fbSvc.updateCategories(this.cats);
   }
 }
