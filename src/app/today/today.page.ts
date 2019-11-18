@@ -15,8 +15,8 @@ export class TodayPage implements OnInit {
   today = moment().format("YYYY-MM-DD");
   date = this.today;
   categories: string[];
-  todayActivities: Activity[];
-  historicalActivities: Activity[];
+  todayActivities: Activity[] = [];
+  historicalActivities: Activity[] = [];
   input: string;
   activityType: string;
 
@@ -85,7 +85,7 @@ export class TodayPage implements OnInit {
       content: this.input
     });
     const dataRef = this.fbSvc.getDataRef();
-    dataRef.doc(this.today).update({
+    dataRef.doc(this.today).set({
       activities: toUpdateActivities,
       point: 1
     });
