@@ -7,6 +7,8 @@ import {
 } from "@angular/forms";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
+import { Storage } from "@ionic/storage";
+import { UserCredential } from "../models/health.model";
 
 @Component({
   selector: "app-login",
@@ -31,13 +33,15 @@ export class LoginPage implements OnInit {
     ]
   };
 
+  email: string;
+  password: string;
+
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
+    private router: Router,
+    private storage: Storage
+  ) {
     this.validations_form = this.formBuilder.group({
       email: new FormControl(
         "",
@@ -53,10 +57,24 @@ export class LoginPage implements OnInit {
     });
   }
 
-  tryLogin(value) {
+  async ngOnInit() {
+    await this.storage.get("email").then(val => (this.email = val));
+    await this.storage.get("password").then(val => (this.password = val));
+
+    if (this.email && this.password) {
+      this.tryLogin({
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
+
+  tryLogin(value: UserCredential) {
     this.authService.doLogin(value).then(
       res => {
         this.router.navigate(["/tabs/today"]);
+        this.storage.set("email", value.email);
+        this.storage.set("password", value.password);
       },
       err => {
         this.errorMessage = err.message;

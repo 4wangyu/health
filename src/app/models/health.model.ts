@@ -17,3 +17,8 @@ export interface Data {
   activities: Activity[];
   point: number;
 }
+
+export interface UserCredential {
+  email: string;
+  password: string;
+}

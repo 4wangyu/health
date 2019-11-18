@@ -25,6 +25,8 @@ import { AuthService } from "./services/auth.service";
 
 import { firebaseConfig } from "../environments/firebase.config";
 
+import { IonicStorageModule } from "@ionic/storage";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -36,7 +38,11 @@ import { firebaseConfig } from "../environments/firebase.config";
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig), // imports firebase/app
     AngularFirestoreModule, // imports firebase/firestore
-    AngularFireAuthModule // imports firebase/auth
+    AngularFireAuthModule, // imports firebase/auth
+    IonicStorageModule.forRoot({
+      name: "__mydb",
+      driverOrder: ["sqlite", "indexeddb", "websql"]
+    })
   ],
   providers: [
     StatusBar,
