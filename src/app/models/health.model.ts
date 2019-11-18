@@ -15,5 +15,5 @@ export interface Activity {
 
 export interface Data {
   activities: Activity[];
-  points: number;
+  point: number;
 }

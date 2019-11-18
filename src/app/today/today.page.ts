@@ -19,6 +19,7 @@ export class TodayPage implements OnInit {
   historicalActivities: Activity[] = [];
   input: string;
   activityType: string;
+  todayPoint: number;
 
   ngOnInit() {
     const userRef = this.fbSvc.getUserRef();
@@ -36,6 +37,7 @@ export class TodayPage implements OnInit {
       .subscribe((res: Data) => {
         if (res) {
           this.todayActivities = res.activities;
+          this.todayPoint = res.point;
         }
       });
   }
@@ -91,7 +93,10 @@ export class TodayPage implements OnInit {
     });
 
     this.resetForm();
-    this.fbSvc.addOnePoint();
+
+    if (!this.todayPoint) {
+      this.fbSvc.addOnePoint();
+    }
   }
 
   private resetForm() {
