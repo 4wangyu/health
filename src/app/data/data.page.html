@@ -14,7 +14,7 @@
 <ion-content>
   <ion-item-sliding *ngFor="let category of categories">
     <ion-item>
-      <ion-card [color]="category.color" button="true">
+      <ion-card [color]="category.color" button="true" (click)="getCategoryData(category.title)">
         <ion-card-header>
           <ion-card-title>{{category.title}}</ion-card-title>
         </ion-card-header>

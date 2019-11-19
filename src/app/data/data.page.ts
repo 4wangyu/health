@@ -49,4 +49,6 @@ export class DataPage implements OnInit {
     this.fbSvc.updateCategories(this.cats);
     this.showForm = false;
   }
+
+  getCategoryData(cat: string) {}
 }

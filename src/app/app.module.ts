@@ -1,31 +1,21 @@
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { RouteReuseStrategy } from "@angular/router";
-
-import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
-
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
 import { AngularFireModule } from "@angular/fire";
-import {
-  AngularFirestoreModule,
-  FirestoreSettingsToken
-} from "@angular/fire/firestore";
-import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireAuthGuard } from "@angular/fire/auth-guard";
-
-import { FirebaseService } from "./services/firebase.service";
-import { AuthService } from "./services/auth.service";
-
-import { firebaseConfig } from "../environments/firebase.config";
-
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { RouteReuseStrategy } from "@angular/router";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { IonicStorageModule } from "@ionic/storage";
+import { firebaseConfig } from "../environments/firebase.config";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { AuthService } from "./services/auth.service";
+import { FirebaseService } from "./services/firebase.service";
+import { NavService } from "./services/nav.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +39,7 @@ import { IonicStorageModule } from "@ionic/storage";
     SplashScreen,
     FirebaseService,
     AuthService,
+    NavService,
     AngularFireAuthGuard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
