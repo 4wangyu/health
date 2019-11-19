@@ -1,10 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { FirebaseService } from "../services/firebase.service";
-import * as moment from "moment";
 import { Action, DocumentSnapshot } from "@angular/fire/firestore";
-import { User, Activity, Data } from "../models/health.model";
-import { AuthService } from "../services/auth.service";
-import { Storage } from "@ionic/storage";
+import * as moment from "moment";
+import { Activity, Data, User } from "../models/health.model";
+import { FirebaseService } from "../services/firebase.service";
 
 @Component({
   selector: "app-today",
@@ -12,11 +10,7 @@ import { Storage } from "@ionic/storage";
   styleUrls: ["today.page.scss"]
 })
 export class TodayPage implements OnInit {
-  constructor(
-    private fbSvc: FirebaseService,
-    private authService: AuthService,
-    private storage: Storage
-  ) {}
+  constructor(private fbSvc: FirebaseService) {}
 
   today = moment().format("YYYY-MM-DD");
   date = this.today;
@@ -26,20 +20,8 @@ export class TodayPage implements OnInit {
   input: string;
   activityType: string;
   todayPoint: number;
-  email: string;
-  password: string;
 
-  async ngOnInit() {
-    await this.storage.get("email").then(val => (this.email = val));
-    await this.storage.get("password").then(val => (this.password = val));
-
-    if (this.email && this.password) {
-      await this.authService.doLogin({
-        email: this.email,
-        password: this.password
-      });
-    }
-
+  ngOnInit() {
     const userRef = this.fbSvc.getUserRef();
     userRef
       .snapshotChanges()
