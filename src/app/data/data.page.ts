@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Config } from "../configs/health.config";
-import { Category, User } from "../models/health.model";
+import { User } from "../models/health.model";
 import { FirebaseService } from "../services/firebase.service";
+import { NavService } from "../services/nav.service";
 import { Action, DocumentSnapshot } from "@angular/fire/firestore";
 
 @Component({
@@ -10,7 +11,7 @@ import { Action, DocumentSnapshot } from "@angular/fire/firestore";
   styleUrls: ["data.page.scss"]
 })
 export class DataPage implements OnInit {
-  constructor(private fbSvc: FirebaseService) {}
+  constructor(private fbSvc: FirebaseService, private navSvc: NavService) {}
 
   colors = Config.colors;
   cats = [];
@@ -50,5 +51,7 @@ export class DataPage implements OnInit {
     this.showForm = false;
   }
 
-  getCategoryData(cat: string) {}
+  getCategoryData(cat: string) {
+    this.navSvc.push("history", { cat });
+  }
 }

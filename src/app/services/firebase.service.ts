@@ -4,7 +4,7 @@ import * as firebase from "firebase/app";
 import "firebase/storage";
 import { AngularFireAuth } from "@angular/fire/auth";
 import * as moment from "moment";
-import { Activity, User } from "../models/health.model";
+import { Activity, User, Act } from "../models/health.model";
 
 @Injectable({
   providedIn: "root"
@@ -76,5 +76,37 @@ export class FirebaseService {
           points: newPoints
         });
       });
+  }
+
+  getActs(cat: string) {
+    let cats: Act[] = [];
+    let theEnd = false;
+    for (let i = 0; i < 30; i++) {
+      const date = moment()
+        .subtract(i, "day")
+        .format("YYYY-MM-DD");
+      this.getDataRef()
+        .doc(date)
+        .ref.get()
+        .then(res => {
+          if (res.exists) {
+            const act = res.data().activities.find(a => a.category == cat);
+            if (act) {
+              cats.push({
+                date,
+                category: act.category,
+                content: act.content
+              });
+            }
+          } else {
+            theEnd = true;
+          }
+        });
+
+      if (theEnd || i === 29) {
+        break;
+      }
+    }
+    return cats;
   }
 }

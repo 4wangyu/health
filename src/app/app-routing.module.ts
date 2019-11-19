@@ -17,6 +17,10 @@ const routes: Routes = [
     path: "register",
     loadChildren: "./register/register.module#RegisterPageModule"
   },
+  {
+    path: "history",
+    loadChildren: "./history/history.module#HistoryPageModule"
+  },
   { path: "**", redirectTo: "tabs" }
 ];
 @NgModule({

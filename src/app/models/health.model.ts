@@ -13,6 +13,10 @@ export interface Activity {
   content: string;
 }
 
+export interface Act extends Activity {
+  date: string;
+}
+
 export interface Data {
   activities: Activity[];
   point: number;
