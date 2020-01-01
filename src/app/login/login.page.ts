@@ -57,17 +57,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    await this.storage.get("email").then(val => (this.email = val));
-    await this.storage.get("password").then(val => (this.password = val));
-
-    if (this.email && this.password) {
-      this.tryLogin({
-        email: this.email,
-        password: this.password
-      });
-    }
-  }
+  async ngOnInit() {}
 
   tryLogin(value: UserCredential) {
     this.authService.doLogin(value).then(

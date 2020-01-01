@@ -21,9 +21,8 @@ export class DataPage implements OnInit {
 
   ngOnInit(): void {
     const userRef = this.fbSvc.getUserRef();
-    userRef
-      .snapshotChanges()
-      .subscribe((res: Action<DocumentSnapshot<User>>) => {
+    userRef.snapshotChanges().subscribe(
+      (res: Action<DocumentSnapshot<User>>) => {
         this.cats = res.payload.data().categories;
         this.categories = [];
         res.payload.data().categories.forEach((cat, i) => {
@@ -32,7 +31,9 @@ export class DataPage implements OnInit {
             color: this.colors[i % 4]
           });
         });
-      });
+      },
+      err => console.log(err)
+    );
   }
 
   delete(cat: string) {
